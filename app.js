@@ -10,11 +10,15 @@ app.get('/yoga', (req, res) => {
 
 app.get('/yoga/:id', (req, res, next) => {
     let id = req.params.id
-    var yogaPose = yogaData.filter(pose => {
+    var yogaPose = yogaData.find(pose => {
         return pose.id == id
     })
-        res.send({yogaData: yogaPose[0]})
-    
+    if (!yogaPose) {
+        res.status(404).send("The yoga pose was not found.")
+    }  
+    else {
+        res.send(yogaPose)
+    }
 }) 
 
 
