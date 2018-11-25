@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
+app.use(express.json())
 const yogaData = require('./data/yogaData')
 
 app.get('/yoga', (req, res) => {
@@ -21,7 +22,17 @@ app.get('/yoga/:id', (req, res, next) => {
     }
 }) 
 
-
+app.post('/yoga', (req, res) => {
+    const poseIds = yogaData.map(pose=> pose.id);
+    const pose = {
+        id: poseIds.length + 1,
+        "sanskrit_name": req.body.sanskrit_name,
+        "english_name": req.body.english_name,
+        "img_url": req.body.img_url
+    }
+    yogaData.push(pose)
+    res.send(yogaData)
+})
 
 
 
