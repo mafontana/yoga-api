@@ -62,7 +62,15 @@ app.put('/yoga/:id', (req, res) => {
 
 })
 
-
+app.delete('/yoga/:id', (req, res) =>{
+    let id = req.params.id
+    const newYogaPoseArray = yogaData.filter(pose => {
+        return pose.id != id
+    })
+    
+    fs.writeFile('./data/yogaData.json', JSON.stringify(newYogaPoseArray), err => console.log(err))
+    res.json(newYogaPoseArray)
+})
 
 
 
